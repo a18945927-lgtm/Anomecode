@@ -9,28 +9,28 @@
 body{
   margin:0;
   font-family:Arial;
-  background:#070b14;
+  background: radial-gradient(circle at top, #0f1b33, #070b14);
   color:white;
-  overflow-x:hidden;
 }
 
 /* ===== AUTH ===== */
-.auth{
+#auth{
   height:100vh;
   display:flex;
   align-items:center;
   justify-content:center;
 }
 
-.box{
+.auth-box{
   width:320px;
   padding:20px;
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;
+  border-radius:16px;
+  backdrop-filter:blur(10px);
 }
 
-input{
+input,select{
   width:100%;
   margin-top:10px;
   padding:10px;
@@ -38,6 +38,7 @@ input{
   border:1px solid rgba(255,255,255,0.1);
   background:rgba(255,255,255,0.05);
   color:white;
+  outline:none;
 }
 
 button{
@@ -52,8 +53,12 @@ button{
   cursor:pointer;
 }
 
+button:hover{
+  background:#6bb4ff;
+}
+
 /* ===== MAIN ===== */
-.main{display:none}
+#main{display:none}
 
 /* TOPBAR */
 .topbar{
@@ -62,22 +67,25 @@ button{
   padding:14px 30px;
   background:rgba(10,15,25,0.7);
   border-bottom:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(10px);
 }
 
-.nav a{
-  margin-left:12px;
-  color:#9bb0d1;
-  text-decoration:none;
+.badge{
+  padding:6px 10px;
+  border-radius:8px;
+  background:rgba(78,161,255,0.15);
+  border:1px solid #4ea1ff;
 }
 
 /* HERO */
 .hero{
   text-align:center;
-  padding:80px 20px;
+  padding:60px 20px;
 }
 
 .hero h1{
-  font-size:48px;
+  font-size:42px;
+  letter-spacing:2px;
 }
 
 /* SERVERS */
@@ -91,17 +99,23 @@ button{
 .card{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;
+  border-radius:16px;
   padding:14px;
   display:flex;
-  gap:10px;
+  gap:12px;
   align-items:center;
+  transition:0.25s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  border-color:#4ea1ff;
 }
 
 .head{
-  width:64px;
-  height:64px;
-  border-radius:10px;
+  width:60px;
+  height:60px;
+  border-radius:12px;
 }
 
 .dot{
@@ -111,194 +125,203 @@ button{
   background:#888;
 }
 
-/* ARTICLES */
-.articles{
-  padding:40px;
-}
-
-.article{
-  padding:14px;
-  margin-top:10px;
-  border-radius:12px;
+/* ADMIN */
+.admin{
+  margin:40px;
+  padding:20px;
+  border-radius:16px;
   background:rgba(255,255,255,0.03);
   border:1px solid rgba(255,255,255,0.08);
-  cursor:pointer;
 }
 
-/* CREATOR */
-.creator{
-  padding:40px;
+.admin h2{
+  margin-top:0;
 }
 
-.creator-box{
-  display:flex;
-  gap:15px;
-  align-items:center;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-}
-
-.creator-box img{
-  width:80px;
-  border-radius:12px;
-}
-
-/* GRAPH */
-.graph{
-  margin:40px;
-  height:200px;
-  position:relative;
-  background:rgba(255,255,255,0.02);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;
-}
-
-.node{
-  width:8px;
-  height:8px;
-  background:#4ea1ff;
-  border-radius:50%;
-  position:absolute;
-}
-
-/* BADGE */
-.badge{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:8px;
-  background:rgba(78,161,255,0.15);
-  border:1px solid #4ea1ff;
+.list-item{
   margin-top:10px;
+  padding:10px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.small-btn{
+  width:auto;
+  padding:6px 10px;
+  font-size:12px;
+  background:#ff4e4e;
 }
 </style>
-</head>
 
+</head>
 <body>
 
 <!-- AUTH -->
-<div class="auth" id="auth">
-  <div class="box">
+<div id="auth">
+  <div class="auth-box">
     <h3 id="title">Login</h3>
 
     <input id="u" placeholder="Username">
     <input id="p" type="password" placeholder="Password">
 
-    <button onclick="login()">Continue</button>
+    <button onclick="login()">Enter</button>
     <button onclick="toggle()" style="background:#222">Switch</button>
   </div>
 </div>
 
 <!-- MAIN -->
-<div class="main" id="main">
+<div id="main">
 
   <div class="topbar">
     <div><b>Anomecode</b></div>
-    <div class="nav">
-      <a href="#servers">Servers</a>
-      <a href="#articles">Articles</a>
-      <a href="#creator">Creator</a>
-    </div>
+    <div class="badge" id="role">USER</div>
   </div>
 
   <div class="hero">
     <h1>ANOMECODE SYSTEM</h1>
-    <div class="badge" id="role">USER</div>
+    <p>Network Dashboard</p>
   </div>
 
-  <!-- SERVERS -->
   <div class="servers" id="servers"></div>
 
-  <!-- ARTICLES -->
-  <div class="articles" id="articles">
-    <h2>Articles</h2>
-    <div class="article">Server Spoof / Resource Pack</div>
-    <div class="article">Freeze / Blink System</div>
-    <div class="article">No Render Modules</div>
-  </div>
+  <!-- ADMIN -->
+  <div class="admin" id="adminPanel" style="display:none">
 
-  <!-- CREATOR -->
-  <div class="creator" id="creator">
-    <h2>Creator</h2>
+    <h2>Admin Panel</h2>
 
-    <div class="creator-box">
-      <img src="https://mc-heads.net/avatar/steve/128">
-      <div>
-        <b>Sneaks</b><br>
-        System Owner / Architect
-      </div>
-    </div>
-  </div>
+    <input id="sname" placeholder="Server name">
 
-  <!-- GRAPH -->
-  <div class="graph">
-    <div class="node" style="top:50px;left:80px"></div>
-    <div class="node" style="top:120px;left:160px"></div>
-    <div class="node" style="top:70px;left:240px"></div>
-    <div class="node" style="top:140px;left:300px"></div>
+    <select id="sstatus">
+      <option>ONLINE</option>
+      <option>OFFLINE</option>
+      <option>UNKNOWN</option>
+    </select>
+
+    <button onclick="addServer()">Add Server</button>
+
+    <div id="adminList"></div>
+
   </div>
 
 </div>
 
 <script>
 
-let mode="login";
+const OWNER = {u:"Sneaks", p:"ForCloud"};
 
-const OWNER={
-  u:"Sneaks",
-  p:"ForCloud"
-};
+let mode="login";
+let currentUser=null;
+
+let servers = JSON.parse(localStorage.getItem("servers")) || [
+  {name:"Hypixel Node", status:"UNKNOWN"},
+  {name:"Mineplex Node", status:"UNKNOWN"},
+  {name:"Alpha Node", status:"UNKNOWN"},
+  {name:"Beta Node", status:"UNKNOWN"},
+  {name:"Gamma Node", status:"UNKNOWN"}
+];
 
 function toggle(){
   mode = mode==="login" ? "reg" : "login";
-  document.getElementById("title").innerText = mode;
+  document.getElementById("title").innerText=mode;
 }
 
 function login(){
+
   let u=document.getElementById("u").value;
   let p=document.getElementById("p").value;
 
   if(u===OWNER.u && p===OWNER.p){
-    start("OWNER");
+    currentUser={name:u,role:"OWNER"};
+    enter();
     return;
   }
 
-  start("USER");
+  let saved=JSON.parse(localStorage.getItem("user"));
+
+  if(saved && saved.u===u && saved.p===p){
+    currentUser={name:u,role:"ADMIN"};
+    enter();
+  } else {
+    alert("Wrong login");
+  }
 }
 
-function start(role){
+function enter(){
 
   document.getElementById("auth").style.display="none";
   document.getElementById("main").style.display="block";
 
-  document.getElementById("role").innerText=role;
+  document.getElementById("role").innerText=currentUser.role;
 
-  let servers=[
-    "Hypixel Node",
-    "Mineplex Node",
-    "Alpha Node",
-    "Beta Node",
-    "Gamma Node"
-  ];
+  renderServers();
 
-  let grid=document.getElementById("servers");
-  grid.innerHTML="";
+  if(currentUser.role==="ADMIN" || currentUser.role==="OWNER"){
+    document.getElementById("adminPanel").style.display="block";
+  }
+
+  renderAdmin();
+}
+
+function renderServers(){
+
+  let g=document.getElementById("servers");
+  g.innerHTML="";
 
   servers.forEach(s=>{
-    grid.innerHTML+=`
+    g.innerHTML+=`
       <div class="card">
         <img class="head" src="https://mc-heads.net/avatar/steve/64">
         <div>
-          <b>${s}</b><br>
+          <b>${s.name}</b><br>
           <div style="display:flex;gap:6px;align-items:center">
-            <div class="dot"></div> UNKNOWN
+            <div class="dot"></div>${s.status}
           </div>
         </div>
       </div>
     `;
   });
 
+}
+
+function renderAdmin(){
+
+  let list=document.getElementById("adminList");
+  list.innerHTML="";
+
+  servers.forEach((s,i)=>{
+    list.innerHTML+=`
+      <div class="list-item">
+        ${s.name} (${s.status})
+        <button class="small-btn" onclick="remove(${i})">X</button>
+      </div>
+    `;
+  });
+
+}
+
+function addServer(){
+
+  let n=document.getElementById("sname").value;
+  let st=document.getElementById("sstatus").value;
+
+  servers.push({name:n,status:st});
+
+  localStorage.setItem("servers",JSON.stringify(servers));
+
+  renderServers();
+  renderAdmin();
+}
+
+function remove(i){
+  servers.splice(i,1);
+  localStorage.setItem("servers",JSON.stringify(servers));
+
+  renderServers();
+  renderAdmin();
 }
 
 </script>
