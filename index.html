@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +14,38 @@ body{
   overflow-x:hidden;
 }
 
-/* ================= BACKGROUND STARS ================= */
+/* ================= TOPBAR ================= */
+.topbar{
+  position:sticky;
+  top:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 30px;
+  background:rgba(10,15,25,0.7);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  z-index:100;
+}
+
+.brand{
+  font-weight:bold;
+  letter-spacing:2px;
+  color:#4ea1ff;
+}
+
+.nav a{
+  margin-left:14px;
+  text-decoration:none;
+  color:#9bb0d1;
+  font-size:14px;
+}
+
+.nav a:hover{
+  color:#4ea1ff;
+}
+
+/* ================= BACKGROUND ================= */
 body::before{
   content:"";
   position:fixed;
@@ -23,7 +54,6 @@ body::before{
     radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.2), transparent),
     radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.15), transparent),
     radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.1), transparent);
-  opacity:0.6;
   pointer-events:none;
 }
 
@@ -38,14 +68,14 @@ body::before{
   position:relative;
 }
 
-/* glow panel */
+/* glow */
 .hero::after{
   content:"";
   position:absolute;
   width:500px;
   height:300px;
   background:rgba(78,161,255,0.08);
-  filter:blur(80px);
+  filter:blur(90px);
   border-radius:50%;
   z-index:-1;
 }
@@ -58,7 +88,6 @@ body::before{
   margin-bottom:20px;
 }
 
-/* orbit ring */
 .orbit{
   position:absolute;
   inset:0;
@@ -67,7 +96,6 @@ body::before{
   animation:spin 12s linear infinite;
 }
 
-/* second orbit */
 .orbit2{
   position:absolute;
   inset:18px;
@@ -76,7 +104,6 @@ body::before{
   animation:spin 8s linear infinite reverse;
 }
 
-/* core */
 .core{
   position:absolute;
   top:50%;
@@ -87,59 +114,28 @@ body::before{
   border-radius:50%;
   background:#4ea1ff;
   box-shadow:0 0 30px rgba(78,161,255,0.9);
-  animation:core 1.6s ease-in-out infinite;
-}
-
-/* particles */
-.particles span{
-  position:absolute;
-  width:5px;
-  height:5px;
-  border-radius:50%;
-  background:#4ea1ff;
-  box-shadow:0 0 10px rgba(78,161,255,0.8);
-  animation:float 5s linear infinite;
+  animation:pulse 1.6s ease-in-out infinite;
 }
 
 /* ================= TEXT ================= */
 .hero h1{
-  font-size:66px;
+  font-size:64px;
   margin:0;
-  letter-spacing:5px;
+  letter-spacing:4px;
 }
 
 .subtitle{
   color:#9bb0d1;
   margin-top:6px;
-  font-size:14px;
 }
 
 .desc{
   max-width:650px;
-  margin-top:12px;
+  margin-top:10px;
   color:#9bb0d1;
-  line-height:1.7;
-  font-size:14px;
+  line-height:1.6;
 }
 
-.badges{
-  margin-top:12px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-
-.badge{
-  font-size:12px;
-  padding:6px 10px;
-  border-radius:20px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.08);
-  color:#9bb0d1;
-}
-
-/* button */
 .btn{
   margin-top:20px;
   padding:12px 22px;
@@ -149,6 +145,40 @@ body::before{
   color:white;
   font-weight:bold;
   cursor:pointer;
+}
+
+/* ================= INTRO ================= */
+.intro{
+  padding:80px 60px;
+}
+
+.intro h2{
+  font-size:34px;
+}
+
+.intro p{
+  color:#9bb0d1;
+  max-width:750px;
+  line-height:1.7;
+}
+
+.actions{
+  margin-top:20px;
+  display:flex;
+  gap:10px;
+}
+
+.actions button{
+  padding:10px 16px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05);
+  color:white;
+  cursor:pointer;
+}
+
+.actions button:hover{
+  background:#4ea1ff;
 }
 
 /* ================= SERVERS ================= */
@@ -168,13 +198,11 @@ body::before{
   gap:12px;
   align-items:center;
   transition:0.3s;
-  backdrop-filter: blur(10px);
 }
 
 .card:hover{
   transform:translateY(-6px);
   border-color:#4ea1ff;
-  box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
 .head{
@@ -184,7 +212,7 @@ body::before{
 }
 
 .name{font-weight:bold;}
-.desc2{font-size:12px;color:#9bb0d1;}
+.ip{font-size:12px;color:#9bb0d1;}
 
 .dot{
   width:8px;
@@ -193,98 +221,75 @@ body::before{
   background:#888;
 }
 
-/* ================= ABOUT ================= */
-.about{
-  padding:80px 60px;
-  border-top:1px solid rgba(255,255,255,0.08);
-}
-
-.about h2{
-  font-size:34px;
-}
-
-.about p{
-  color:#9bb0d1;
-  max-width:900px;
-  line-height:1.7;
-}
-
 /* ================= FOOTER ================= */
 .footer{
   margin-top:80px;
-  padding:60px 40px;
+  padding:60px;
   border-top:1px solid rgba(255,255,255,0.08);
   text-align:center;
   color:#9bb0d1;
 }
 
-/* ================= ANIMATIONS ================= */
+/* ================= ANIM ================= */
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes core{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.25)}}
-@keyframes float{
-  0%{transform:translateY(0) translateX(0);opacity:0.2}
-  50%{opacity:1}
-  100%{transform:translateY(-40px) translateX(20px);opacity:0}
-}
+@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.3)}}
 </style>
 </head>
 
 <body>
 
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="brand">ANOMECODE</div>
+  <div class="nav">
+    <a href="#">Главная</a>
+    <a href="#servers">Серверы</a>
+    <a href="#about">О проекте</a>
+  </div>
+</div>
+
 <!-- HERO -->
 <div class="hero">
 
   <div class="logo-wrapper">
-
     <div class="orbit"></div>
     <div class="orbit2"></div>
     <div class="core"></div>
-
-    <div class="particles">
-      <span style="top:10px;left:40px"></span>
-      <span style="top:20px;left:90px"></span>
-      <span style="top:60px;left:120px"></span>
-      <span style="top:100px;left:80px"></span>
-      <span style="top:120px;left:30px"></span>
-    </div>
-
   </div>
 
   <h1>ANOMECODE</h1>
-
-  <div class="subtitle">Next-gen Minecraft Server Network UI</div>
-
+  <div class="subtitle">Minecraft Network Dashboard</div>
   <div class="desc">
-    A futuristic dashboard that visualizes Minecraft servers as a living network system with dynamic nodes and real-time style UI.
-  </div>
-
-  <div class="badges">
-    <div class="badge">Realtime UI</div>
-    <div class="badge">Server Nodes</div>
-    <div class="badge">Sci-fi Design</div>
+    Платформа для отображения Minecraft серверов как единой сети узлов с современным интерфейсом.
   </div>
 
   <button class="btn" onclick="document.getElementById('servers').scrollIntoView({behavior:'smooth'})">
-    Explore Network
+    Открыть серверы
   </button>
 
+</div>
+
+<!-- INTRO -->
+<div class="intro" id="about">
+  <h2>О проекте</h2>
+  <p>
+    Anomecode — это визуальная система серверов Minecraft.
+    Каждый сервер представлен как узел сети, создавая ощущение живой инфраструктуры и структуры мира.
+  </p>
+
+  <div class="actions">
+    <button>Документация</button>
+    <button>GitHub</button>
+    <button>Discord</button>
+  </div>
 </div>
 
 <!-- SERVERS -->
 <div class="servers" id="servers"></div>
 
-<!-- ABOUT -->
-<div class="about">
-  <h2>About System</h2>
-  <p>
-    Anomecode represents Minecraft servers as a connected digital network.
-    Each server acts like a node in a larger system, designed to feel alive, structured, and interactive.
-  </p>
-</div>
-
 <!-- FOOTER -->
 <div class="footer">
-  © 2026 Anomecode — Network operational
+  © 2026 Anomecode — All systems active
 </div>
 
 <script>
@@ -309,7 +314,7 @@ function render(){
       <img class="head" src="https://mc-heads.net/avatar/steve/64">
       <div>
         <div class="name">${s.name}</div>
-        <div class="desc2">${s.ip}</div>
+        <div class="ip">${s.ip}</div>
         <div style="display:flex;gap:6px;align-items:center;margin-top:6px;font-size:12px;">
           <div class="dot"></div>
           UNKNOWN
