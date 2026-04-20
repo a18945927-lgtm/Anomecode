@@ -2,45 +2,264 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anomecode</title>
   <style>
     body {
       margin: 0;
-      background: #0b1220;
-      color: white;
       font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 120px;
+      background: radial-gradient(circle at top, #0f1b33, #0b1220);
+      color: white;
     }
 
-    h1 {
-      font-size: 50px;
+    header {
+      display: flex;
+      justify-content: space-between;
+      padding: 18px 30px;
+      background: #070b14;
+      border-bottom: 1px solid #1f2a44;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      margin: 0 10px;
+      color: #4ea1ff;
+      text-decoration: none;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 90px 20px;
+    }
+
+    .hero-logo-wrapper {
+      position: relative;
+      display: inline-block;
       margin-bottom: 10px;
     }
 
-    p {
-      color: #9bb0d1;
-      font-size: 18px;
+    .bg-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 130px;
+      font-weight: bold;
+      color: #4ea1ff;
+      opacity: 0.07;
+      transition: 0.3s;
+      pointer-events: none;
     }
 
-    .box {
+    .hero-logo-wrapper:hover .bg-logo {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0.12;
+    }
+
+    .hero-logo {
+      font-size: 52px;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .hero p {
+      color: #9bb0d1;
+      max-width: 600px;
+      margin: 10px auto;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 12px 22px;
+      background: #4ea1ff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* SERVER GRID */
+    .section-title {
+      text-align: center;
+      font-size: 24px;
       margin-top: 40px;
-      padding: 20px;
-      display: inline-block;
+    }
+
+    .servers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      padding: 20px 40px 60px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, #111a2e, #0e1628);
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid #223255;
+      cursor: pointer;
+      transition: 0.25s;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+
+    .head {
+      width: 64px;
+      height: 64px;
+      border-radius: 8px;
+      image-rendering: pixelated;
+      background: #0b1220;
+      flex-shrink: 0;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .name {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .desc {
+      font-size: 12px;
+      color: #9bb0d1;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: gray;
+    }
+
+    .online { background: #4cff88; }
+    .offline { background: #ff4c4c; }
+    .unknown { background: #888; }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
       background: #111a2e;
+      padding: 20px;
+      width: 320px;
       border-radius: 12px;
     }
   </style>
 </head>
-
 <body>
 
-  <h1>Anomecode</h1>
-  <p>Minecraft Server Information System</p>
+<header>
+  <div class="logo">Anomecode</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#servers">Servers</a>
+  </nav>
+</header>
 
-  <div class="box">
-    <p>Status: Online Platform</p>
+<section class="hero" id="home">
+  <div class="hero-logo-wrapper">
+    <div class="bg-logo">AC</div>
+    <div class="hero-logo">ANOMECODE</div>
   </div>
+  <p>Minecraft Server Information Platform</p>
+  <button class="btn" onclick="scrollToServers()">View Servers</button>
+</section>
+
+<h2 class="section-title" id="servers">Server Nodes</h2>
+
+<section class="servers" id="serverGrid"></section>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h3 id="mName"></h3>
+    <p id="mStatus"></p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+let servers = [
+  {name:"Unknown Node 1"},
+  {name:"Unknown Node 2"},
+  {name:"Unknown Node 3"},
+  {name:"Unknown Node 4"},
+  {name:"Unknown Node 5"},
+  {name:"Unknown Node 6"}
+];
+
+function getHead(i){
+  return `https://mc-heads.net/avatar/steve/64`;
+}
+
+function render(){
+  const grid = document.getElementById("serverGrid");
+  grid.innerHTML = "";
+
+  servers.forEach((s,i)=>{
+    let card = document.createElement("div");
+    card.className = "card";
+    card.onclick = ()=>openServer(i);
+
+    card.innerHTML = `
+      <div class="dot unknown"></div>
+      <img class="head" src="${getHead(i)}">
+      <div class="info">
+        <div class="name">${s.name}</div>
+        <div class="desc">Unknown server • Click to open</div>
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+}
+
+function openServer(i){
+  document.getElementById("modal").style.display="flex";
+  document.getElementById("mName").innerText=servers[i].name;
+  document.getElementById("mStatus").innerText="Server page system not connected yet";
+}
+
+function closeModal(){
+  document.getElementById("modal").style.display="none";
+}
+
+function scrollToServers(){
+  document.getElementById("servers").scrollIntoView({behavior:"smooth"});
+}
+
+render();
+</script>
 
 </body>
 </html>
