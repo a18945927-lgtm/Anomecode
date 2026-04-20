@@ -9,33 +9,55 @@
 body{
   margin:0;
   font-family:Arial;
-  background: radial-gradient(circle at top, #0f1b33, #070b14);
+  background:#070b14;
   color:white;
   overflow-x:hidden;
 }
 
-/* ================= TOPBAR ================= */
+/* ===== BACKGROUND ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(78,161,255,0.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(78,161,255,0.05), transparent 40%);
+  pointer-events:none;
+}
+
+/* ===== TOPBAR ===== */
 .topbar{
   position:sticky;
   top:0;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:14px 30px;
+  gap:12px;
+  padding:14px 24px;
   background:rgba(10,15,25,0.7);
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(255,255,255,0.08);
   z-index:100;
 }
 
 .brand{
+  color:#4ea1ff;
   font-weight:bold;
   letter-spacing:2px;
-  color:#4ea1ff;
+}
+
+.search{
+  flex:1;
+  max-width:300px;
+  padding:8px 12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.05);
+  color:white;
+  outline:none;
 }
 
 .nav a{
-  margin-left:14px;
+  margin-left:12px;
   text-decoration:none;
   color:#9bb0d1;
   font-size:14px;
@@ -45,50 +67,24 @@ body{
   color:#4ea1ff;
 }
 
-/* ================= BACKGROUND ================= */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.2), transparent),
-    radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.15), transparent),
-    radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.1), transparent);
-  pointer-events:none;
-}
-
-/* ================= HERO ================= */
+/* ===== HERO ===== */
 .hero{
-  height:85vh;
+  height:75vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
-  position:relative;
 }
 
-/* glow */
-.hero::after{
-  content:"";
-  position:absolute;
-  width:500px;
-  height:300px;
-  background:rgba(78,161,255,0.08);
-  filter:blur(90px);
-  border-radius:50%;
-  z-index:-1;
-}
-
-/* ================= LOGO ================= */
-.logo-wrapper{
-  position:relative;
+.logo{
   width:150px;
   height:150px;
+  position:relative;
   margin-bottom:20px;
 }
 
-.orbit{
+.ring{
   position:absolute;
   inset:0;
   border-radius:50%;
@@ -96,143 +92,140 @@ body::before{
   animation:spin 12s linear infinite;
 }
 
-.orbit2{
-  position:absolute;
-  inset:18px;
-  border-radius:50%;
-  border:1px solid rgba(78,161,255,0.15);
-  animation:spin 8s linear infinite reverse;
-}
-
 .core{
   position:absolute;
   top:50%;
   left:50%;
-  width:28px;
-  height:28px;
+  width:22px;
+  height:22px;
   transform:translate(-50%,-50%);
   border-radius:50%;
   background:#4ea1ff;
-  box-shadow:0 0 30px rgba(78,161,255,0.9);
-  animation:pulse 1.6s ease-in-out infinite;
+  box-shadow:0 0 30px #4ea1ff;
 }
 
-/* ================= TEXT ================= */
-.hero h1{
-  font-size:64px;
+h1{
+  font-size:56px;
   margin:0;
-  letter-spacing:4px;
 }
 
-.subtitle{
+.sub{
   color:#9bb0d1;
-  margin-top:6px;
 }
 
-.desc{
-  max-width:650px;
-  margin-top:10px;
+/* ===== SYSTEM SECTION ===== */
+.system{
+  padding:70px 50px;
+}
+
+.system h2{
+  font-size:30px;
+}
+
+.system p{
   color:#9bb0d1;
+  max-width:700px;
   line-height:1.6;
 }
 
-.btn{
-  margin-top:20px;
-  padding:12px 22px;
-  border:none;
-  border-radius:10px;
-  background:#4ea1ff;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-/* ================= INTRO ================= */
-.intro{
-  padding:80px 60px;
-}
-
-.intro h2{
-  font-size:34px;
-}
-
-.intro p{
-  color:#9bb0d1;
-  max-width:750px;
-  line-height:1.7;
-}
-
-.actions{
-  margin-top:20px;
-  display:flex;
-  gap:10px;
-}
-
-.actions button{
-  padding:10px 16px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.05);
-  color:white;
-  cursor:pointer;
-}
-
-.actions button:hover{
-  background:#4ea1ff;
-}
-
-/* ================= SERVERS ================= */
-.servers{
+.grid{
+  margin-top:30px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;
-  padding:60px;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
 }
 
 .card{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
-  border-radius:16px;
+  padding:16px;
+  border-radius:14px;
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  border-color:#4ea1ff;
+}
+
+.card h3{
+  margin:0 0 6px 0;
+  font-size:15px;
+}
+
+.card p{
+  color:#9bb0d1;
+  font-size:13px;
+}
+
+/* ===== SERVERS ===== */
+.servers{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+  padding:60px;
+}
+
+.server{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:14px;
   padding:14px;
   display:flex;
   gap:12px;
   align-items:center;
-  transition:0.3s;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-.card:hover{
-  transform:translateY(-6px);
+.server:hover{
+  transform:translateY(-5px);
   border-color:#4ea1ff;
 }
 
 .head{
-  width:64px;
-  height:64px;
+  width:60px;
+  height:60px;
   border-radius:12px;
 }
 
-.name{font-weight:bold;}
-.ip{font-size:12px;color:#9bb0d1;}
+.name{
+  font-weight:bold;
+}
+
+.ip{
+  font-size:12px;
+  color:#9bb0d1;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:6px;
+  font-size:12px;
+}
 
 .dot{
   width:8px;
   height:8px;
   border-radius:50%;
-  background:#888;
 }
 
-/* ================= FOOTER ================= */
+.online{background:#4cff88;}
+.offline{background:#ff4c4c;}
+.unknown{background:#888;}
+
+/* ===== FOOTER ===== */
 .footer{
-  margin-top:80px;
   padding:60px;
-  border-top:1px solid rgba(255,255,255,0.08);
   text-align:center;
   color:#9bb0d1;
+  border-top:1px solid rgba(255,255,255,0.08);
 }
 
-/* ================= ANIM ================= */
-@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.3)}}
+/* ===== ANIM ===== */
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 
@@ -241,65 +234,79 @@ body::before{
 <!-- TOPBAR -->
 <div class="topbar">
   <div class="brand">ANOMECODE</div>
+
+  <input class="search" placeholder="Search servers..." />
+
   <div class="nav">
-    <a href="#">Главная</a>
-    <a href="#servers">Серверы</a>
-    <a href="#about">О проекте</a>
+    <a href="#">Home</a>
+    <a href="#system">System</a>
+    <a href="#servers">Nodes</a>
   </div>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-
-  <div class="logo-wrapper">
-    <div class="orbit"></div>
-    <div class="orbit2"></div>
+  <div class="logo">
+    <div class="ring"></div>
     <div class="core"></div>
   </div>
 
   <h1>ANOMECODE</h1>
-  <div class="subtitle">Minecraft Network Dashboard</div>
-  <div class="desc">
-    Платформа для отображения Minecraft серверов как единой сети узлов с современным интерфейсом.
-  </div>
-
-  <button class="btn" onclick="document.getElementById('servers').scrollIntoView({behavior:'smooth'})">
-    Открыть серверы
-  </button>
-
+  <div class="sub">Minecraft Network System</div>
 </div>
 
-<!-- INTRO -->
-<div class="intro" id="about">
-  <h2>О проекте</h2>
+<!-- SYSTEM -->
+<section class="system" id="system">
+
+  <h2>Network System</h2>
+
   <p>
-    Anomecode — это визуальная система серверов Minecraft.
-    Каждый сервер представлен как узел сети, создавая ощущение живой инфраструктуры и структуры мира.
+    Anomecode — это сеть Minecraft серверов, где каждый сервер является узлом единой цифровой структуры.
+    Платформа создана для визуализации и управления серверной экосистемой.
   </p>
 
-  <div class="actions">
-    <button>Документация</button>
-    <button>GitHub</button>
-    <button>Discord</button>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Node System</h3>
+      <p>Серверы работают как взаимосвязанные узлы сети.</p>
+    </div>
+
+    <div class="card">
+      <h3>Live Status</h3>
+      <p>Отображение состояния серверов: online / offline / unknown.</p>
+    </div>
+
+    <div class="card">
+      <h3>Scalable Core</h3>
+      <p>Система может расширяться без ограничений.</p>
+    </div>
+
+    <div class="card">
+      <h3>Game Layer</h3>
+      <p>Каждый узел — это Minecraft сервер или его эмуляция.</p>
+    </div>
+
   </div>
-</div>
+
+</section>
 
 <!-- SERVERS -->
 <div class="servers" id="servers"></div>
 
 <!-- FOOTER -->
 <div class="footer">
-  © 2026 Anomecode — All systems active
+  © 2026 Anomecode Network
 </div>
 
 <script>
 
 const servers=[
-  {name:"Hypixel Node",ip:"mc.hypixel.net"},
-  {name:"Mineplex Node",ip:"mc.mineplex.com"},
-  {name:"Alpha Server",ip:"alpha.local"},
-  {name:"Beta Server",ip:"beta.local"},
-  {name:"Gamma Server",ip:"gamma.local"}
+  {name:"Hypixel Node",ip:"mc.hypixel.net",status:"online"},
+  {name:"Mineplex Node",ip:"mc.mineplex.com",status:"offline"},
+  {name:"Alpha Server",ip:"alpha.local",status:"unknown"},
+  {name:"Beta Server",ip:"beta.local",status:"unknown"},
+  {name:"Gamma Node",ip:"gamma.local",status:"online"}
 ];
 
 function render(){
@@ -307,22 +314,28 @@ function render(){
   grid.innerHTML="";
 
   servers.forEach(s=>{
-    const card=document.createElement("div");
-    card.className="card";
 
-    card.innerHTML=`
+    const div=document.createElement("div");
+    div.className="server";
+
+    let color = s.status==="online" ? "online" :
+                s.status==="offline" ? "offline" : "unknown";
+
+    div.innerHTML=`
       <img class="head" src="https://mc-heads.net/avatar/steve/64">
+
       <div>
         <div class="name">${s.name}</div>
         <div class="ip">${s.ip}</div>
-        <div style="display:flex;gap:6px;align-items:center;margin-top:6px;font-size:12px;">
-          <div class="dot"></div>
-          UNKNOWN
+
+        <div class="status">
+          <div class="dot ${color}"></div>
+          ${s.status.toUpperCase()}
         </div>
       </div>
     `;
 
-    grid.appendChild(card);
+    grid.appendChild(div);
   });
 }
 
