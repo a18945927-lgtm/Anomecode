@@ -3,37 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anomecode System</title>
+<title>Anomecode</title>
 
 <style>
 body{
   margin:0;
   font-family:Arial;
-  background: radial-gradient(circle at top, #0f1b33, #070b14);
+  background:#070b14;
   color:white;
+  overflow-x:hidden;
 }
 
-/* ===== AUTH ===== */
-#auth{
-  height:100vh;
+/* BACKGROUND */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(78,161,255,0.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(78,161,255,0.05), transparent 40%);
+  pointer-events:none;
+}
+
+/* TOPBAR */
+.topbar{
+  position:sticky;
+  top:0;
   display:flex;
   align-items:center;
-  justify-content:center;
+  gap:12px;
+  padding:14px 24px;
+  background:rgba(10,15,25,0.7);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  z-index:100;
 }
 
-.auth-box{
-  width:320px;
-  padding:20px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:16px;
-  backdrop-filter:blur(10px);
+.brand{
+  color:#4ea1ff;
+  font-weight:bold;
+  letter-spacing:2px;
 }
 
-input,select{
-  width:100%;
-  margin-top:10px;
-  padding:10px;
+.search{
+  flex:1;
+  max-width:300px;
+  padding:8px 12px;
   border-radius:10px;
   border:1px solid rgba(255,255,255,0.1);
   background:rgba(255,255,255,0.05);
@@ -41,51 +56,96 @@ input,select{
   outline:none;
 }
 
-button{
-  width:100%;
-  margin-top:12px;
-  padding:10px;
-  border:none;
-  border-radius:10px;
-  background:#4ea1ff;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+.nav a{
+  margin-left:12px;
+  text-decoration:none;
+  color:#9bb0d1;
+  font-size:14px;
 }
 
-button:hover{
-  background:#6bb4ff;
-}
-
-/* ===== MAIN ===== */
-#main{display:none}
-
-/* TOPBAR */
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  padding:14px 30px;
-  background:rgba(10,15,25,0.7);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-  backdrop-filter:blur(10px);
-}
-
-.badge{
-  padding:6px 10px;
-  border-radius:8px;
-  background:rgba(78,161,255,0.15);
-  border:1px solid #4ea1ff;
+.nav a:hover{
+  color:#4ea1ff;
 }
 
 /* HERO */
 .hero{
+  height:75vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:60px 20px;
 }
 
-.hero h1{
-  font-size:42px;
-  letter-spacing:2px;
+.logo{
+  width:150px;
+  height:150px;
+  position:relative;
+  margin-bottom:20px;
+}
+
+.ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:1px solid rgba(78,161,255,0.25);
+  animation:spin 12s linear infinite;
+}
+
+.core{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:22px;
+  height:22px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:#4ea1ff;
+  box-shadow:0 0 30px #4ea1ff;
+}
+
+h1{
+  font-size:56px;
+  margin:0;
+}
+
+.sub{
+  color:#9bb0d1;
+}
+
+/* SYSTEM */
+.system{
+  padding:70px 50px;
+}
+
+.system h2{
+  font-size:30px;
+}
+
+.system p{
+  color:#9bb0d1;
+  max-width:700px;
+  line-height:1.6;
+}
+
+.grid{
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+
+.card{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:16px;
+  border-radius:14px;
+  transition:0.2s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+  border-color:#4ea1ff;
 }
 
 /* SERVERS */
@@ -93,21 +153,22 @@ button:hover{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:16px;
-  padding:40px;
+  padding:60px;
 }
 
-.card{
+.server{
   background:rgba(255,255,255,0.04);
   border:1px solid rgba(255,255,255,0.08);
-  border-radius:16px;
+  border-radius:14px;
   padding:14px;
   display:flex;
   gap:12px;
   align-items:center;
-  transition:0.25s;
+  cursor:pointer;
+  transition:0.2s;
 }
 
-.card:hover{
+.server:hover{
   transform:translateY(-5px);
   border-color:#4ea1ff;
 }
@@ -118,211 +179,134 @@ button:hover{
   border-radius:12px;
 }
 
+.name{font-weight:bold;}
+.ip{font-size:12px;color:#9bb0d1;}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-top:6px;
+  font-size:12px;
+}
+
 .dot{
   width:8px;
   height:8px;
   border-radius:50%;
-  background:#888;
+  transition:0.3s;
 }
 
-/* ADMIN */
-.admin{
-  margin:40px;
-  padding:20px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
+.online{background:#4cff88;}
+.offline{background:#ff4c4c;}
+.unknown{background:#888;}
+
+.footer{
+  padding:60px;
+  text-align:center;
+  color:#9bb0d1;
+  border-top:1px solid rgba(255,255,255,0.08);
 }
 
-.admin h2{
-  margin-top:0;
-}
-
-.list-item{
-  margin-top:10px;
-  padding:10px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.small-btn{
-  width:auto;
-  padding:6px 10px;
-  font-size:12px;
-  background:#ff4e4e;
-}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
-
 </head>
+
 <body>
 
-<!-- AUTH -->
-<div id="auth">
-  <div class="auth-box">
-    <h3 id="title">Login</h3>
-
-    <input id="u" placeholder="Username">
-    <input id="p" type="password" placeholder="Password">
-
-    <button onclick="login()">Enter</button>
-    <button onclick="toggle()" style="background:#222">Switch</button>
+<div class="topbar">
+  <div class="brand">ANOMECODE</div>
+  <input class="search" placeholder="Search servers..." />
+  <div class="nav">
+    <a href="#">Home</a>
+    <a href="#system">System</a>
+    <a href="#servers">Nodes</a>
   </div>
 </div>
 
-<!-- MAIN -->
-<div id="main">
-
-  <div class="topbar">
-    <div><b>Anomecode</b></div>
-    <div class="badge" id="role">USER</div>
+<div class="hero">
+  <div class="logo">
+    <div class="ring"></div>
+    <div class="core"></div>
   </div>
 
-  <div class="hero">
-    <h1>ANOMECODE SYSTEM</h1>
-    <p>Network Dashboard</p>
-  </div>
+  <h1>ANOMECODE</h1>
+  <div class="sub">Minecraft Network System</div>
+</div>
 
-  <div class="servers" id="servers"></div>
+<section class="system" id="system">
+  <h2>Network System</h2>
+  <p>
+    Anomecode — это сеть Minecraft серверов, где каждый сервер является узлом единой цифровой структуры.
+  </p>
+</section>
 
-  <!-- ADMIN -->
-  <div class="admin" id="adminPanel" style="display:none">
+<div class="servers" id="servers"></div>
 
-    <h2>Admin Panel</h2>
-
-    <input id="sname" placeholder="Server name">
-
-    <select id="sstatus">
-      <option>ONLINE</option>
-      <option>OFFLINE</option>
-      <option>UNKNOWN</option>
-    </select>
-
-    <button onclick="addServer()">Add Server</button>
-
-    <div id="adminList"></div>
-
-  </div>
-
+<div class="footer">
+  © 2026 Anomecode Network
 </div>
 
 <script>
 
-const OWNER = {u:"Sneaks", p:"ForCloud"};
-
-let mode="login";
-let currentUser=null;
-
-let servers = JSON.parse(localStorage.getItem("servers")) || [
-  {name:"Hypixel Node", status:"UNKNOWN"},
-  {name:"Mineplex Node", status:"UNKNOWN"},
-  {name:"Alpha Node", status:"UNKNOWN"},
-  {name:"Beta Node", status:"UNKNOWN"},
-  {name:"Gamma Node", status:"UNKNOWN"}
+let servers=[
+  {name:"Hypixel Node",ip:"mc.hypixel.net",status:"online"},
+  {name:"Mineplex Node",ip:"mc.mineplex.com",status:"offline"},
+  {name:"Alpha Server",ip:"alpha.local",status:"unknown"},
+  {name:"Beta Server",ip:"beta.local",status:"unknown"},
+  {name:"Gamma Node",ip:"gamma.local",status:"online"}
 ];
 
-function toggle(){
-  mode = mode==="login" ? "reg" : "login";
-  document.getElementById("title").innerText=mode;
-}
+/* РЕНДЕР */
+function render(){
+  const grid=document.getElementById("servers");
+  grid.innerHTML="";
 
-function login(){
+  servers.forEach((s,i)=>{
 
-  let u=document.getElementById("u").value;
-  let p=document.getElementById("p").value;
+    const color = s.status;
 
-  if(u===OWNER.u && p===OWNER.p){
-    currentUser={name:u,role:"OWNER"};
-    enter();
-    return;
-  }
+    const div=document.createElement("div");
+    div.className="server";
 
-  let saved=JSON.parse(localStorage.getItem("user"));
+    div.innerHTML=`
+      <img class="head" src="https://mc-heads.net/avatar/steve/64">
 
-  if(saved && saved.u===u && saved.p===p){
-    currentUser={name:u,role:"ADMIN"};
-    enter();
-  } else {
-    alert("Wrong login");
-  }
-}
+      <div>
+        <div class="name">${s.name}</div>
+        <div class="ip">${s.ip}</div>
 
-function enter(){
-
-  document.getElementById("auth").style.display="none";
-  document.getElementById("main").style.display="block";
-
-  document.getElementById("role").innerText=currentUser.role;
-
-  renderServers();
-
-  if(currentUser.role==="ADMIN" || currentUser.role==="OWNER"){
-    document.getElementById("adminPanel").style.display="block";
-  }
-
-  renderAdmin();
-}
-
-function renderServers(){
-
-  let g=document.getElementById("servers");
-  g.innerHTML="";
-
-  servers.forEach(s=>{
-    g.innerHTML+=`
-      <div class="card">
-        <img class="head" src="https://mc-heads.net/avatar/steve/64">
-        <div>
-          <b>${s.name}</b><br>
-          <div style="display:flex;gap:6px;align-items:center">
-            <div class="dot"></div>${s.status}
-          </div>
+        <div class="status">
+          <div class="dot ${color}"></div>
+          ${s.status.toUpperCase()}
         </div>
       </div>
     `;
+
+    grid.appendChild(div);
+  });
+}
+
+/* 🔥 LIVE STATUS UPDATE SYSTEM */
+function randomStatus(){
+  const states=["online","offline","unknown"];
+
+  servers.forEach(s=>{
+    // шанс изменения статуса
+    if(Math.random()<0.35){
+      s.status=states[Math.floor(Math.random()*states.length)];
+    }
   });
 
+  render();
 }
 
-function renderAdmin(){
+/* автообновление */
+setInterval(()=>{
+  randomStatus();
+},3000);
 
-  let list=document.getElementById("adminList");
-  list.innerHTML="";
-
-  servers.forEach((s,i)=>{
-    list.innerHTML+=`
-      <div class="list-item">
-        ${s.name} (${s.status})
-        <button class="small-btn" onclick="remove(${i})">X</button>
-      </div>
-    `;
-  });
-
-}
-
-function addServer(){
-
-  let n=document.getElementById("sname").value;
-  let st=document.getElementById("sstatus").value;
-
-  servers.push({name:n,status:st});
-
-  localStorage.setItem("servers",JSON.stringify(servers));
-
-  renderServers();
-  renderAdmin();
-}
-
-function remove(i){
-  servers.splice(i,1);
-  localStorage.setItem("servers",JSON.stringify(servers));
-
-  renderServers();
-  renderAdmin();
-}
+render();
 
 </script>
 
