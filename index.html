@@ -14,7 +14,6 @@ body{
   overflow-x:hidden;
 }
 
-/* BACKGROUND */
 #bg{
   position:fixed;
   inset:0;
@@ -23,7 +22,6 @@ body{
 
 .content{position:relative;z-index:2}
 
-/* TOPBAR */
 .topbar{
   position:fixed;
   top:0;
@@ -32,10 +30,11 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:0 30px;
+  padding:0 20px;
   background:rgba(10,15,25,0.7);
   backdrop-filter:blur(14px);
   border-bottom:1px solid rgba(255,255,255,0.06);
+  gap:12px;
 }
 
 .brand{
@@ -43,16 +42,45 @@ body{
   align-items:center;
   gap:10px;
   font-weight:600;
+  white-space:nowrap;
 }
 
-.nav a{
+.search{
+  flex:1;
+  display:flex;
+  justify-content:center;
+}
+
+.search input{
+  width:100%;
+  max-width:420px;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);
+  color:#eaf1ff;
+  outline:none;
+}
+
+.search input:focus{border-color:#4ea1ff}
+
+.nav a, .nav button{
   margin-left:16px;
   text-decoration:none;
   color:#9fb3c9;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font:inherit;
 }
-.nav a:hover{color:white}
+.nav a:hover,.nav button:hover{color:white}
 
-/* HERO */
+.rules-btn{
+  padding:6px 10px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.12);
+}
+
 .hero{
   height:100vh;
   display:flex;
@@ -62,46 +90,15 @@ body{
   text-align:center;
 }
 
-.logo{
-  width:120px;
-  margin-bottom:20px;
-  filter:drop-shadow(0 0 30px rgba(78,161,255,0.4));
-}
-
+.logo{width:120px;margin-bottom:20px;filter:drop-shadow(0 0 30px rgba(78,161,255,0.4));}
 h1{font-size:64px;margin:0}
+.sub{margin-top:14px;color:#9fb3c9;max-width:600px}
 
-.sub{
-  margin-top:14px;
-  color:#9fb3c9;
-  max-width:600px;
-}
+.system{padding:80px 20px;max-width:1000px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{padding:16px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)}
 
-/* SYSTEM */
-.system{
-  padding:80px 20px;
-  max-width:1000px;
-  margin:auto;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:14px;
-}
-
-.card{
-  padding:16px;
-  border-radius:14px;
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.06);
-}
-
-/* SERVERS */
-.servers{
-  padding:80px 20px;
-  max-width:1000px;
-  margin:auto;
-}
+.servers{padding:80px 20px;max-width:1000px;margin:auto}
 
 .server{
   display:flex;
@@ -115,22 +112,22 @@ h1{font-size:64px;margin:0}
   cursor:pointer;
   transition:0.2s;
 }
+.server:hover{transform:translateY(-4px);border-color:#4ea1ff}
 
-.server:hover{
-  transform:translateY(-4px);
-  border-color:#4ea1ff;
-}
-
-.head{
-  width:64px;
-  height:64px;
-  border-radius:12px;
-}
-
+.head{width:64px;height:64px;border-radius:12px}
 .name{font-weight:600}
 .ip{font-size:12px;color:#9fb3c9}
 
-/* SERVER PAGE */
+.status{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  margin-left:auto;
+}
+.status.online{background:#3dff8b}
+.status.offline{background:#ff4e4e}
+.status.inactive{background:#8a8a8a}
+
 #serverPage{
   position:fixed;
   inset:0;
@@ -140,66 +137,39 @@ h1{font-size:64px;margin:0}
   overflow:auto;
 }
 
-.sp-wrap{
-  max-width:1000px;
-  margin:auto;
-  padding:40px 20px;
-}
+.sp-wrap{max-width:1000px;margin:auto;padding:40px 20px}
+.sp-back{color:#4ea1ff;cursor:pointer;margin-bottom:20px}
+.sp-header{display:flex;gap:16px;align-items:center}
+.sp-header img{width:80px;border-radius:16px}
 
-.sp-back{
-  color:#4ea1ff;
-  cursor:pointer;
-  margin-bottom:20px;
-}
+#sp-name{font-size:28px;font-weight:600}
+#sp-short{color:#9fb3c9}
+#sp-desc{margin-top:20px;color:#9fb3c9}
 
-.sp-header{
-  display:flex;
-  gap:16px;
+#sp-images{margin-top:30px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+#sp-images img{width:100%;border-radius:12px}
+#sp-images img:hover{transform:scale(1.03)}
+
+.footer{padding:60px;text-align:center;color:#7f8ea8}
+
+#rulesModal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
   align-items:center;
+  justify-content:center;
+  z-index:10000;
 }
-
-.sp-header img{
-  width:80px;
+.rules-box{
+  width:min(600px,90%);
+  background:#0b1220;
+  border:1px solid rgba(255,255,255,0.08);
   border-radius:16px;
+  padding:20px;
 }
-
-#sp-name{
-  font-size:28px;
-  font-weight:600;
-}
-
-#sp-short{
-  color:#9fb3c9;
-}
-
-#sp-desc{
-  margin-top:20px;
-  color:#9fb3c9;
-}
-
-#sp-images{
-  margin-top:30px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:12px;
-}
-
-#sp-images img{
-  width:100%;
-  border-radius:12px;
-  transition:0.2s;
-}
-
-#sp-images img:hover{
-  transform:scale(1.03);
-}
-
-/* FOOTER */
-.footer{
-  padding:60px;
-  text-align:center;
-  color:#7f8ea8;
-}
+.rules-box ul{color:#9fb3c9;line-height:1.6}
+.rules-close{margin-top:16px;color:#4ea1ff;cursor:pointer}
 </style>
 </head>
 
@@ -209,37 +179,35 @@ h1{font-size:64px;margin:0}
 
 <div class="content">
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="brand">
-    <svg width="26" viewBox="0 0 100 100">
-      <polygon points="50,10 90,90 10,90" fill="#4ea1ff"/>
-    </svg>
+    <svg width="26" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="#4ea1ff"/></svg>
     ANOMECODE
+  </div>
+
+  <div class="search">
+    <input type="text" placeholder="Search servers..." oninput="filterServers(this.value)">
   </div>
 
   <div class="nav">
     <a href="#">Home</a>
     <a href="#">System</a>
     <a href="#">Servers</a>
+    <button class="rules-btn" onclick="openRules()">Rules</button>
   </div>
 </div>
 
-<!-- HERO -->
 <div class="hero">
   <svg class="logo" viewBox="0 0 100 100">
     <polygon points="50,10 90,90 10,90" fill="#4ea1ff"/>
     <polygon points="50,25 75,85 25,85" fill="#070b14"/>
   </svg>
-
   <h1>Anomecode</h1>
   <div class="sub">Платформа визуализации Minecraft проектов</div>
 </div>
 
-<!-- SYSTEM -->
 <div class="system">
   <h2>System</h2>
-
   <div class="grid">
     <div class="card">Node-based architecture</div>
     <div class="card">Minimal interface</div>
@@ -248,7 +216,6 @@ h1{font-size:64px;margin:0}
   </div>
 </div>
 
-<!-- SERVERS -->
 <div class="servers">
   <h2>Servers</h2>
   <div id="servers"></div>
@@ -258,12 +225,9 @@ h1{font-size:64px;margin:0}
 
 </div>
 
-<!-- SERVER PAGE -->
 <div id="serverPage">
   <div class="sp-wrap">
-
     <div class="sp-back" onclick="closeServer()">← Назад</div>
-
     <div class="sp-header">
       <img id="sp-icon">
       <div>
@@ -271,123 +235,87 @@ h1{font-size:64px;margin:0}
         <div id="sp-short"></div>
       </div>
     </div>
-
     <div id="sp-desc"></div>
     <div id="sp-images"></div>
+  </div>
+</div>
 
+<div id="rulesModal">
+  <div class="rules-box">
+    <h2>Rules</h2>
+    <ul>
+      <li>Only Minecraft servers</li>
+      <li>No spam or duplicates</li>
+      <li>Valid IP required</li>
+      <li>Honest description</li>
+    </ul>
+    <div class="rules-close" onclick="closeRules()">Close</div>
   </div>
 </div>
 
 <script>
+const DEFAULT_ICON = "https://picsum.photos/seed/mc-landscape/64/64?grayscale";
 
-/* SERVERS DATA */
 const servers=[
-{
-  name:"Hypixel Node",
-  ip:"mc.hypixel.net",
-  icon:"https://mc-heads.net/avatar/steve/64",
-  desc:"Крупный игровой узел сети.",
-  images:[
-    "https://picsum.photos/500/300?1",
-    "https://picsum.photos/500/300?2"
-  ]
-},
-{
-  name:"Mineplex Node",
-  ip:"mc.mineplex.com",
-  icon:"https://mc-heads.net/avatar/creeper/64",
-  desc:"Игровые режимы и PvP.",
-  images:[
-    "https://picsum.photos/500/300?3"
-  ]
-}
+{name:"Hypixel Node",ip:"mc.hypixel.net",status:"online",icon:"https://mc-heads.net/avatar/steve/64",desc:"Крупный игровой узел.",images:["https://picsum.photos/500/300?1"]},
+{name:"Mineplex Node",ip:"mc.mineplex.com",status:"offline",icon:"",desc:"PvP режимы.",images:["https://picsum.photos/500/300?2"]},
+{name:"Test Node",ip:"0.0.0.0",status:"inactive",icon:"",desc:"Неактивен.",images:["https://picsum.photos/500/300?3"]}
 ];
 
-/* RENDER */
-function render(){
+function render(list=servers){
   const root=document.getElementById("servers");
   root.innerHTML="";
 
-  servers.forEach((s,i)=>{
+  list.forEach(s=>{
     const div=document.createElement("div");
     div.className="server";
+    div.onclick=()=>openServerByObject(s);
 
-    div.onclick=()=>openServer(i);
+    const iconSrc = (s.icon && s.icon.trim()) ? s.icon : DEFAULT_ICON;
 
     div.innerHTML=`
-      <img class="head" src="${s.icon}">
+      <img class="head" src="${iconSrc}">
       <div>
         <div class="name">${s.name}</div>
         <div class="ip">${s.ip}</div>
       </div>
+      <div class="status ${s.status}"></div>
     `;
 
     root.appendChild(div);
   });
 }
 
-/* OPEN PAGE */
-function openServer(i){
-  const s=servers[i];
+function filterServers(q){
+  q=q.toLowerCase();
+  render(servers.filter(s=>s.name.toLowerCase().includes(q)||s.ip.toLowerCase().includes(q)));
+}
 
+function openServerByObject(s){
   document.getElementById("serverPage").style.display="block";
-
   document.getElementById("sp-name").innerText=s.name;
   document.getElementById("sp-short").innerText=s.ip;
   document.getElementById("sp-desc").innerText=s.desc;
-  document.getElementById("sp-icon").src=s.icon;
+  document.getElementById("sp-icon").src=(s.icon && s.icon.trim()) ? s.icon : DEFAULT_ICON;
 
   const box=document.getElementById("sp-images");
   box.innerHTML="";
-
-  s.images.forEach(img=>{
-    const im=document.createElement("img");
-    im.src=img;
-    box.appendChild(im);
+  s.images.forEach(i=>{
+    const img=document.createElement("img");
+    img.src=i;
+    box.appendChild(img);
   });
 }
 
-function closeServer(){
-  document.getElementById("serverPage").style.display="none";
-}
+function closeServer(){document.getElementById("serverPage").style.display="none";}
+function openRules(){document.getElementById("rulesModal").style.display="flex";}
+function closeRules(){document.getElementById("rulesModal").style.display="none";}
 
-/* BG */
-const c=document.getElementById("bg");
-const ctx=c.getContext("2d");
-
-c.width=innerWidth;
-c.height=innerHeight;
-
+const c=document.getElementById("bg");const ctx=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
 let p=[];
-for(let i=0;i<60;i++){
-  p.push({
-    x:Math.random()*c.width,
-    y:Math.random()*c.height,
-    vx:(Math.random()-0.5)*0.4,
-    vy:(Math.random()-0.5)*0.4
-  });
-}
-
-function draw(){
-  ctx.clearRect(0,0,c.width,c.height);
-
-  for(let i of p){
-    i.x+=i.vx;
-    i.y+=i.vy;
-
-    if(i.x<0||i.x>c.width)i.vx*=-1;
-    if(i.y<0||i.y>c.height)i.vy*=-1;
-
-    ctx.fillStyle="#4ea1ff";
-    ctx.fillRect(i.x,i.y,2,2);
-  }
-
-  requestAnimationFrame(draw);
-}
-
-draw();
-render();
-
+for(let i=0;i<60;i++){p.push({x:Math.random()*c.width,y:Math.random()*c.height,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4});}
+function draw(){ctx.clearRect(0,0,c.width,c.height);for(let i of p){i.x+=i.vx;i.y+=i.vy;if(i.x<0||i.x>c.width)i.vx*=-1;if(i.y<0||i.y>c.height)i.vy*=-1;ctx.fillStyle="#4ea1ff";ctx.fillRect(i.x,i.y,2,2);}requestAnimationFrame(draw);}draw();render();
 </script>
 
 </body>
